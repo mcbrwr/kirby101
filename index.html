@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Kirby 101</title>
+  <link rel="stylesheet" href="/assets/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="/assets/reveal.js/css/theme/white.css">
+  <style>
+    .reveal {
+      font-size: 34px;
+    }
+    .reveal small, 
+    .reveal .small { font-size: .6em; }
+    .reveal pre {
+      padding: 1em;
+      white-space: pre-wrap;
+    }
+    .reveal code {
+      background: yellow;
+      display: inline-block;
+      padding: 0 .3em;
+    }
+    .reveal em {
+      border-bottom: solid 3px tomato;
+    }
+    .reveal .cols {
+      columns: 10em;
+      font-size: .5em;
+      text-align: left;
+    }
+    .reveal .cols h3 {
+      margin-bottom: 0;
+    }
+    .reveal .cols h3 + p {
+      margin-top: 0;
+    }
+    .reveal .cols div {
+      display: inline-block;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      break-inside: avoid-column;
+    }
+    .cyan { background: #99ebff; }
+    .green { background: #bfff80; }
+    .pink { background: #ffccff; }
+  </style>
+</head>
+<body>
+  
+  <div class="reveal">
+    <div class="slides">
+      
+      <section>
+        <header>
+          <h2>Kirby 101</h2>
+          <p>A rundown of Kirby.<br><small>A blazingly fast, ultra efficient & extremely fun CMS.</small></p>
+          <p>🎉</p>
+        </header>
+      </section>
+
+      <section>
+        
+        <!-- File based -->
+
+        <section>
+          <h2>File based</h2>
+          <p><em>There is no Database.</em></p>
+          <p>Databases are great for data.<br>Text files are great for...  text.</p>
+        </section>
+
+        <section>
+          <h2>Advantages</h2>
+          <ul>
+            <li>Easy setup
+            <li>Easy transfer
+            <li>Easy manipulation
+            <li>Blazingly fast
+          </ul>
+        </section>
+
+        <section>
+          <h2>How easy?!</h2>
+          <p><small>really easy!</small></p>
+          <ul>
+            <li>Transfering content is just an <code>rsync</code> away
+            <li>Manipulating content is editing readable files
+            <li>Manipulating structure is just dragging and renaming some folders
+          </ul>
+        </section>
+
+        <section>
+          <h2>Blazingly fast?!</h2>
+          <p><small>Average page rendering (TTFB) can be easily under 100ms. Even 50ms is in reach. (with caching disabled!)</small></p>
+          <ul>
+            <li>Using only files utilizes the hardware cache of disks
+            <li>The linux file system works magic
+            <li>Server grade SSD is made for extreme file performance, so build right on it's core
+            <li>ie: Fetching a single content item is fast as hell
+            <li>and: Full text search over flat files is amazingly fast
+          </ul>
+          <p class="small">again:</p>
+          <p>Databases are great for data.<br>Text files are great for...  text</p>
+        </section>
+
+        <section>
+          <h2>Limits?</h2>
+          <p>Yes</p>
+          <p>Testing has shown that at sites larger than <em>5000 pages</em> rendering of a full list of those pages can get a bit sluggish (over a second on a solid server). If you need more than that, see if there is content you can <em>migrate to a database</em> (ie: ecommerce products or stuff like that). Kirby has excellent functions to deal with database content as well. Or consider reconsider switching to a larger scalable CMS.</p>
+        </section>
+
+      </section>
+
+      <!-- Consistent, transparent, Lightweight -->
+      <section>
+        <h2>Consistent, transparent, Lightweight <br><small>Frontender friendly to the bone</small><br>🤓</h2>
+        <ul>
+          <li>Everything in Kirby is consistent <br><small>Functions, locations, objects, etc</small>
+          <li>Folder & programming structure is as flat as possible <br><small>No hellishly deep located files & objects</small>
+          <li>Only what's needed is loaded <br><small>No overhead, not half the internet is preloaded *just in case*</small>
+          <li>Only basic building blocks are provided <br><small>You're not pushed in structures with prefab templates. Build what you need!</small>
+        </ul>
+      </section>
+
+      <!-- Folder structure -->
+      <section>
+        <h2>Folder structure</h2>
+        <table class="small">
+          <tbody>
+            <tr><th>/content</th><td>Site content</td></tr>
+            <tr><th>/kirby</th><td>The Kirby app (frontend rendering)</td></tr>
+            <tr><th>/panel</th><td>The Panel app (cms)</td></tr>
+            <tr><th>/site/accounts</th><td>User accounts</td></tr>
+            <tr><th>/site/blueprints</th><td>Page definitions for the CMS</td></tr>
+            <tr><th>/site/config</th><td>Site config</td></tr>
+            <tr><th>/site/controllers</th><td>Template controllers</td></tr>
+            <tr><th>/site/fields</th><td>Custom CMS fields</td></tr>
+            <tr><th>/site/models</th><td>Content models</td></tr>
+            <tr><th>/site/plugins</th><td>Custom functionality goes here</td></tr>
+            <tr><th>/site/snippets</th><td>Reusable snippets: <code>snippet('mysnip')</code></td></tr>
+            <tr><th>/site/templates</th><td>Templates</td></tr>
+          </tbody>
+        </table>
+        <hr>
+        <p class="small">And then there's some cache folders: <code>/thumbs</code> & <code>/site/cache</code></p>
+      </section>
+
+      <!-- Content & Templates -->
+      <section>
+        
+        <section>
+          <h2>Content & Templates</h2>
+          <p>Folders are the base of the website structure (urls).<br>
+          Text files (YAML format) contain the content and sibling files are available as related content.</p>
+        </section>
+        
+        <section>
+          <h2>Folder hierachy</h2>
+          <p>The numbers are for sorting, other sorting formats are available.<br>
+          An unsorted folder is tagged "invisible".</p>
+<pre>
+content
+| 1-about-us
+| 2-projects
+| |  1-beautiful-project
+| |  2-another-great-project-we-did
+| |  an-unpublished-project
+| 3-contact
+| home.txt
+| error.txt
+| site.txt
+</pre>
+          <p class="small"><em>Note:</em> An invisible content item is not unreachable. The URL does exist. It also does show up if you request <code>$pages->index()</code> but not if you request <code>$pages->index()->visible()</code></p>
+        </section>
+        
+        <section>
+            <h2>Page rendering</h2>
+            <p class="small">URL > content > template</p>
+            <p>Folder name translates to page url, file names translate to template</p>
+            <p class="small">The URL: <br><code>https://mysite.com/blogs/some-blog-about-something</code></p>
+            <p class="small">Will translate to the content file: <br><code>/content/blogs/1-some-blog-about-something/blog.txt</code></p>
+            <p class="small">And because the file is named "blog.txt" it will try to render with the template: <br><code>/site/templates/blog.php</code>.</p>
+            <p class="small">If not found it defaults to the default template: <br><code>/site/templates/default.php</code></p>
+        </section>
+
+        <section>
+            <h2>Content files are in YAML format</h2>
+            <p class="small">i.e: /content/1-about-us/default.txt might look like this:</p>
+<pre>
+<span class="cyan">Title</span>: Over ons
+----
+<span class="pink">Text</span>: This is the content of this field in (link:https://daringfireball.net/projects/markdown/syntax text:markdown) syntax
+----
+<span class="green">Customfield</span>: Value of the field
+</pre>
+            <p class="small">The content is then available in the template:</p>
+<pre>
+&lt;article&gt;
+  &lt;h1&gt;<span class="cyan">&lt;?= $page->title() ?&gt;</span>&lt;/h1&gt;
+  <span class="pink">&lt;?= $page->text()->kirbytext() ?&gt;</span>
+  &lt;footer&gt;
+    <span class="green">&lt;?= $page->customfield() ?&gt;</span>
+  &lt;/article&gt;
+&lt;/article&gt;
+</pre>
+          <p class="small"><code>kirbytext()</code> is one of the many base functions for content rendering in Kirby. <br>Find all of them in the <a href="https://getkirby.com/docs/cheatsheet">Kirby Cheat Sheet</a></p>
+        </section>
+        
+      </section>
+
+      <section>
+        <section>
+          <h2>Templating objects</h2>
+          <table><tbody>
+            <tr><th>$page</th><td>The current page object</td></tr>
+            <tr><th>$site</th><td>The site object with the content of site.txt and more</td></tr>
+            <tr><th>$pages</th><td>A collection of all pages</td></tr>
+          </tbody></table>
+        </section>
+      </section>
+
+      <!-- panel -->
+      <section>
+        
+        <section>
+          <h2>No CMS yet?!</h2>
+          <p class="small">Panel, the Kirby CMS</p>
+          <p>We <strong>could</strong> stop here... URL > content > template > rendering is enough te get things going. But this requires all content to be edited by hand.</p>
+          <p>Luckily Kirby comes with an optional CMS called <em>"Panel"</em></p>
+          <p><em>"Blueprints"</em> are linked with your <em>content</em> and can auto generate and modify the content in your site.</p>
+          <p class="small">The CMS is located at https://site.com/panel</p>
+        </section>
+
+        <section>
+          <h2>The panel</h2>
+          <ul>
+            <li>Responsive
+            <li>Single page focus
+            <li>Fully customizable
+          </ul>
+        </section>
+
+        <section>
+          <h2>Dashboard</h2>
+          <img src="/assets/img/panel-dashboard.png" alt="">
+        </section>
+
+        <section>
+          <h2>Page</h2>
+          <img src="/assets/img/panel-page.png" alt="">
+        </section>
+
+        <section>
+          <h2>Site options</h2>
+          <img src="/assets/img/panel-page.png" alt="">
+        </section>
+
+      </section>
+      
+
+      <!-- blueprints -->
+      <section>
+        <section>
+          <h2>Blueprints / Fields</h2>
+        </section>
+        <section>
+          <h2>Blueprints</h2>
+          <p class="small">Blueprints shape & customise your CMS for your content</p>
+          <p>Create "blueprints" with the same name as your templates in de the <code>/site/blueprints</code> folder to define the layout of the fields in the CMS.</p>
+<pre>
+title: Bloglist
+pages:
+  template:
+    - blog
+options:
+  template: false
+files: true
+fields:
+  title:
+    label: Title
+    type:  text
+  intro:
+    label: Text
+    type:  textarea
+</pre>
+        </section>
+
+        <section>
+          <h2>Site blueprint</h2>
+          <p class="small">Pro-tip</p>
+          <p>😜</p>
+          <p>The "site options" page is also fully customisable. Create a blueprint calles <code>/site/blueprints/site.yml</code> and you're good to go!</p>
+        </section>
+
+        
+        <!-- panel field types -->
+        <section>
+          <h2>Panel field types</h2>
+          <div class="cols small">
+            <div><h3>Checkbox</h3><p> A single checkbox field</p></div>
+            <div><h3>Checkboxes</h3><p> A list of checkbox fields</p></div>
+            <div><h3>Date</h3><p> A date picker field</p></div>
+            <div><h3>Datetime</h3><p> A date and time picker field</p></div>
+            <div><h3>Email</h3><p> An email input field with autocompletion and validation</p></div>
+            <div><h3>Headline</h3><p> Creates a headline to group fields</p></div>
+            <div><h3>Hidden</h3><p> Creates a hidden field</p></div>
+            <div><h3>Image</h3><p> A drag and drop image select field with preview thumbnail</p></div>
+            <div><h3>Info</h3><p> A plain HTML field for user instructions</p></div>
+            <div><h3>Line</h3><p> Draws a horizontal line to separate fields</p></div>
+            <div><h3>Number</h3><p> A number input field with validation</p></div>
+            <div><h3>Page</h3><p> A single page input with autocompletion</p></div>
+            <div><h3>Radiobuttons</h3><p> A list of radio buttons</p></div>
+            <div><h3>Select</h3><p> A simple selectbox field</p></div>
+            <div><h3>Structure</h3><p> Structured data input, which stores data in a field as YAML.</p></div>
+            <div><h3>Tags</h3><p> An interactive tags input field with autocompletion</p></div>
+            <div><h3>Tel</h3><p> A phone number input field</p></div>
+            <div><h3>Text</h3><p> A standard, single-line input field</p></div>
+            <div><h3>Textarea</h3><p> A textarea field, which auto-resizes and has built-in format buttons.</p></div>
+            <div><h3>Time</h3><p> A time picker field</p></div>
+            <div><h3>Toggle</h3><p> Yes/no or on/off toggle</p></div>
+            <div><h3>Url</h3><p> A URL input field with validation</p></div>
+            <div><h3>User</h3><p> A user input field with autocompletion for registered users.</p></div>
+          </div>
+          <p class="small">Full list: <a href="https://getkirby.com/docs/cheatsheet#panel-fields">Kirby Cheatsheet</a></p>
+          <p class="small">Not satisfied yet?! Custom field types are rather easy to build: <a href="https://getkirby.com/docs/developer-guide/panel/fields">Kirby docs on custom form fields</a></p>
+        </section>
+      </section>
+
+      <!-- advanced shit -->
+      <section>
+
+        <section>
+          <h2>Advanced shit</h2>
+          <p>💩</p>
+          <ul>
+            <li>Snippets
+            <li>Template controllers
+            <li>Page models
+            <li>Plugins
+            <li>Routes
+          </ul>
+        </section>
+        
+        <!-- snippets -->
+        <section>
+          <h2>Snippets</h2>
+          <p class="small">Snippets are reusable parts that can be inserted with the <code>snippet()</code> function.</p>
+          <p class="small"><code>/site/snippets/nav.php</code> could look like this:</p>
+<pre>
+&lt;ul class="navlist"&gt;
+  &lt;?php foreach($pages-&gt;visible() as $p): ?&gt;
+    &lt;li&lt;?php e($p-&gt;isOpen(), ' class="active"') ?&gt;&gt;
+      &lt;a href="&lt;?php echo $p-&gt;url() ?&gt;"&gt;&lt;?php echo $p-&gt;title() ?&gt;&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;?php endforeach ?&gt;
+&lt;/ul>
+</pre>
+          <p class="small">And it can be used in a template like <code>&lt?php snippet('nav'); ?&gt;</code></p>
+        </section>
+
+        <!-- controllers -->
+        <section>
+          <h2>Template controllers</h2>
+          <p>PHP templating is efficient but requires some discipline. Keep your templates clean. Put logic into template controllers (or models).</p>
+          <p class="small">For a template <code>/site/templates/bloglist.php</code> <br>create a controller <code>/site/controllers/bloglist.php</code></p>
+<pre>
+&lt;?php
+return function($site, $pages, $page) {
+  // get all articles and add pagination:
+  $articles = $page->children()->visible()->flip()->paginate(20);
+  // create a shortcut for pagination:
+  $pagination = $articles->pagination();
+  // return the $articles & $pagination object to the template:
+  return compact('articles', 'pagination');
+}
+</pre>
+          <p class="small">Now <code>$articles</code> is a collection of paginated articles in the <code>bloglist.php</code> template <br>and <code>$pagination</code> is the pagination object</p>
+        </section>
+
+        <!-- models -->
+        <section>
+          <h2>Page models</h2>
+          <p>A page model extends the default page object with extra functionality.</p>
+          <p>For a content item called blog.txt the model is <code>/site/models/blog.php</code></p>
+  <pre>
+  &lt;?php
+  class BlogPage extends Page {
+    public function cover() {
+      return $this->image('cover')->or('/assets/img/default-cover.jpg');
+    }
+  }
+  </pre>
+          <p class="small">The cover image is then available as <code>$page->cover()</code></p>
+        </section>
+
+        <!-- plugins -->
+        <section>
+          <h2>Plugins</h2>
+          <p>Plugins can be anything from dashboard extensions to page render functionalities.</p>
+          <p class="small">Readmore: <a href="https://getkirby.com/docs/developer-guide/plugins">Kirby plugin docs</a></p>
+        </section>
+
+        <!-- routes -->
+        <section>
+          <h2>Routes</h2>
+          <p>In the core URLs are rendered by conten dirs. But routes are another way to catch an URL.</p>
+<pre>
+<?php
+kirby()->routes(array(  
+  array(
+    'pattern' => '(.*)/json', 
+    'action'  => function($uid) {
+      $data = $pages->find($uid)->serialize();
+      return response::json($data);
+    }
+  )
+));
+</pre>
+          <p>This will make every url available in json format.</p>
+          <p class="small">Read more: <a href="https://getkirby.com/docs/developer-guide/advanced/routing">Kirby routing docs</a></p>
+        </section>
+
+      </section>
+
+      <!-- more -->
+      <section>
+        <h2>Resources</h2>
+        <p class="small">There's so much more</p>
+        <ul>
+          <li>Multilanguage
+          <li>User roles
+          <li>Custom fields
+          <li>Kirby CLI
+          <li>...
+        </ul>
+        <p>Read all about it:</p>
+        <ul>
+          <li><a href="https://getkirby.com/docs">Kirby official docs</a>
+          <li><a href="https://forum.getkirby.com/">Kirby official forum</a>
+          <li><a href="https://getkirby.com/docs/cookbook">Kirby official cookbook</a>
+          <li><a href="https://github.com/jenstornell/kirby-plugins/issues">Unofficial but extensive list of plugins</a>
+          <li><a href="http://getkirby-plugins.com/">Unofficial Kirby plugins list</a>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="/assets/reveal.js/js/reveal.js"></script>
+  <script>
+    Reveal.initialize();
+  </script>
+</body>
+</html>

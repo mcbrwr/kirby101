@@ -1,0 +1,12 @@
+{
+  "name": "kirby101",
+  "version": "1.0.0",
+  "description": "A 30 minute Kirby CMS rundown",
+  "main": "index.html",
+  "repository": "https://bitbucket.org/reprovinci/kirby101",
+  "author": "M.C. Brouwer",
+  "license": "MIT",
+  "dependencies": {
+    "reveal.js": "^3.4.1"
+  }
+}
