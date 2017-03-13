@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Kirby 101</title>
-  <link rel="stylesheet" href="/assets/reveal.js/css/reveal.css">
-  <link rel="stylesheet" href="/assets/reveal.js/css/theme/white.css">
+  <link rel="stylesheet" href="assets/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="assets/reveal.js/css/theme/white.css">
   <style>
     .reveal {
       font-size: 34px;
@@ -241,17 +241,17 @@ content
 
         <section>
           <h2>Dashboard</h2>
-          <img src="/assets/img/panel-dashboard.png" alt="">
+          <img src="assets/img/panel-dashboard.png" alt="">
         </section>
 
         <section>
           <h2>Page</h2>
-          <img src="/assets/img/panel-page.png" alt="">
+          <img src="assets/img/panel-page.png" alt="">
         </section>
 
         <section>
           <h2>Site options</h2>
-          <img src="/assets/img/panel-page.png" alt="">
+          <img src="assets/img/panel-page.png" alt="">
         </section>
 
       </section>
@@ -385,7 +385,7 @@ return function($site, $pages, $page) {
   &lt;?php
   class BlogPage extends Page {
     public function cover() {
-      return $this->image('cover')->or('/assets/img/default-cover.jpg');
+      return $this->image('cover')->or('assets/img/default-cover.jpg');
     }
   }
   </pre>
@@ -445,7 +445,7 @@ kirby()->routes(array(
     </div>
   </div>
 
-  <script src="/assets/reveal.js/js/reveal.js"></script>
+  <script src="assets/reveal.js/js/reveal.js"></script>
   <script>
     Reveal.initialize();
   </script>
